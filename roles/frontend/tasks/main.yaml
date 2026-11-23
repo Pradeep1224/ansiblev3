@@ -1,0 +1,50 @@
+
+  - name: enable nginx 1.26
+    command: dnf module enable nginx:1.26 -y
+  - name: install nginx
+    dnf:
+      name: nginx
+      state: present
+
+  - name: start and enable nginx
+    service:
+      name: nginx
+      state: started
+      enabled: yes
+
+  - name: Find targeted directories
+    ansible.builtin.find:
+      paths: /usr/share/nginx/html/*      # The base directory to search inside
+      recurse: true
+      hidden: true
+      file_type: any
+    register: found_directories            # Saves the output list
+
+
+  - name: print directory content
+    debug:
+      msg: "{{ found_directories }}"
+
+  - name: Delete the found directories
+    ansible.builtin.file:
+      path: "{{ item.path }}"
+      state: absent                        # Recursively deletes the directory and everything inside
+    loop: "{{ found_directories.files }}"   # Iterates over the list of found objects
+
+  - name: downloading file
+    get_url:
+      url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/frontend-v4.zip
+      dest: /tmp/frontend.zip
+  - name: unzip
+    unarchive: 
+      src: /tmp/frontend.zip
+      dest: /usr/share/nginx/html/   
+      remote_src: yes
+  - name: creating roboshop.configure and coping
+    template:
+      src: roboshop.conf.j2
+      dest: /etc/nginx/default.d/roboshop.conf
+    notify: restart nginx
+ 
+ 
+ 

@@ -1,0 +1,27 @@
+- name: copy mongo repo
+  copy: 
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+    # - name: test the inventory group file variable
+    #   debug:
+    #     msg: "{{app_name}}"  
+- name: install mongodb server
+  package:
+    name: mongodb-org
+    state: present
+
+- name: enable and start mongodb
+  service: 
+    name: mongod
+    state: started
+    enabled: yes
+- name: replace in the config allow remote connections.
+  replace:
+    path: /etc/mongod.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+- name: restart mongodb
+  service: 
+    name: mongod
+    state: restarted
+    enabled: yes
