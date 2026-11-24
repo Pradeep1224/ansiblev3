@@ -8,11 +8,21 @@
       - erlang
       - rabbitmq-server
     state: present
+
+- name: install botocore and boto3
+  ansible.builtin.pip:
+    name:
+      - boto3
+      - botocore
+    state: present
+    executable: pip3.9
+    
 - name: start and enable rabbitmq server
   service:
     name: rabbitmq-server
     state: started
     enabled: yes
+
 
 - name: adding rabbitmq user and set password 
   community.rabbitmq.rabbitmq_user:
