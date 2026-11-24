@@ -6,16 +6,16 @@
 # ansible_user: "{{vault_ansible_user}}"
 # ansible_password: "{{vault_ansible_password}}"
 # rabbitmq_user: "{{vault_rabbitmq_user}}"
-mongodb_host: mongodb.pradeepverse.online
-redis_host: redis.pradeepverse.online
-catalogue_host: catalogue.pradeepverse.online
-mysql_host: mysql.pradeepverse.online
-rabbitmq_host: rabbitmq.pradeepverse.online
-user_host: user.pradeepverse.online
-cart_host: cart.pradeepverse.online
-shipping_host: shipping.pradeepverse.online
-payment_host: payment.pradeepverse.online
-frontend_host: frontend.pradeepverse.online
+mongodb_host: mongodb-{{ env }}.pradeepverse.online
+redis_host: redis-{{ env }}.pradeepverse.online
+catalogue_host: catalogue-{{ env }}.pradeepverse.online
+mysql_host: mysql-{{ env }}.pradeepverse.online
+rabbitmq_host: rabbitmq-{{ env }}.pradeepverse.online
+user_host: user-{{ env }}.pradeepverse.online
+cart_host: cart-{{ env }}.pradeepverse.online
+shipping_host: shipping-{{ env }}.pradeepverse.online
+payment_host: payment-{{ env }}.pradeepverse.online
+frontend_host: frontend-{{ env }}.pradeepverse.online
 
 # shipping_user: "{{vault_shipping_user}}"
 # shipping_password: "{{vault_shipping_password}}"
